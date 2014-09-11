@@ -1,48 +1,26 @@
 require "method_source"
 require "thread"
-require "monitor"
 require "drb"
 require "logger"
+require "bg/drb_runner"
 
 module Bg
   class Runner
-    include MonitorMixin
-    attr_reader :logger, :drb_uri, :drb_pid, :drb_instance
+    attr_reader :logger, :drb_uri, :drb_pid, :drb_runner
 
     def initialize(logger: nil)
-      binding.pry
-      @logger = logger || Logger.new("/dev/null")
+      @logger = logger
       @drb_uri = "druby://127.0.0.1:#{random_port}"
     end
 
-    def run_and_forget(*args, &block)
+    def run(*args, &block)
       DRb.start_service
-      start_drb_instance
-      drb_instance.drb_run_and_forget(proc_string(block), Marshal.dump(args))
+      start_drb_runner
+      drb_runner.run(
+        proc: proc_string(block),
+        args: Marshal.dump(args)
+      )
       DRb.stop_service
-    end
-
-    def drb_run_and_forget(proc_string, args)
-      Thread.new do
-        begin
-          sleep 0
-          method = "define_method :run #{proc_string}"
-          runner = Class.new { eval method }
-          logger.info "Start exec: #{method}"
-          runner.new.run(*Marshal.load(args))
-          logger.info "Finish exec: #{method}"
-          DRb.stop_service
-          Process.exit 0
-        rescue Exception => e
-          logger.info "Failed exec: #{method}\n#{e}"
-          DRb.stop_service rescue nil
-          Process.exit 1
-        end
-      end
-    end
-
-    def ready?
-      true
     end
 
     private
@@ -53,20 +31,21 @@ module Bg
       code[index..-1].strip
     end
 
-    def start_drb_instance
-      return if drb_instance
+    def start_drb_runner
+      return if drb_runner
       @drb_pid = fork do
-        DRb.start_service drb_uri, self
+        DRb.start_service drb_uri, DrbRunner.new(logger: logger)
         DRb.thread.join
       end
       Process.detach drb_pid
-      @drb_instance = DRbObject.new_with_uri(drb_uri)
-      sleep 0.001 while !drb_instance_ready?
+      @drb_runner = DRbObject.new_with_uri(drb_uri)
+      sleep 0.001 while !drb_runner_ready?
+      drb_runner
     end
 
-    def drb_instance_ready?
+    def drb_runner_ready?
       begin
-        drb_instance.ready?
+        drb_runner.ready?
       rescue DRb::DRbConnError
         false
       end
