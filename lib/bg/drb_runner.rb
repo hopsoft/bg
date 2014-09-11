@@ -24,7 +24,7 @@ module Bg
           runner.new.run(*Marshal.load(args))
           logger.info "Finish exec: #{method}"
         rescue Exception => e
-          logger.info "Failed exec: #{method}\n#{e}"
+          logger.error "Failed exec: #{method}\n#{e}"
         ensure
           DRb.stop_service rescue nil
           Process.exit

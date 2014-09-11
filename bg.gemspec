@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Bg::VERSION
   gem.authors       = ["Nathan Hopkins"]
   gem.email         = ["natehop@gmail.com"]
-  gem.description   = "Run blocks in a separate background process."
-  gem.summary       = "Run blocks in a separate background process."
+  gem.description   = "Easily run code in a separate background process."
+  gem.summary       = "Easily run code in a separate background process."
   gem.homepage      = "https://github.com/hopsoft/bg"
   gem.license       = "MIT"
 
