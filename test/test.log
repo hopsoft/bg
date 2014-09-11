@@ -1,0 +1,27 @@
+# Logfile created on 2014-09-11 16:10:10 -0600 by logger.rb/44203
+I, [2014-09-11T16:10:27.128955 #2870]  INFO -- : Start exec: define_method :run do |a, b, c|
+        sleep a
+        sleep b
+        sleep c
+      end
+I, [2014-09-11T16:10:33.132011 #2870]  INFO -- : Finish exec: define_method :run do |a, b, c|
+        sleep a
+        sleep b
+        sleep c
+      end
+I, [2014-09-11T16:10:33.133681 #2870]  INFO -- : Failed exec: define_method :run do |a, b, c|
+        sleep a
+        sleep b
+        sleep c
+      end
+exit
+I, [2014-09-11T16:12:50.317582 #3170]  INFO -- : Start exec: define_method :run do |a, b, c|
+        sleep a
+        sleep b
+        sleep c
+      end
+I, [2014-09-11T16:12:56.320952 #3170]  INFO -- : Finish exec: define_method :run do |a, b, c|
+        sleep a
+        sleep b
+        sleep c
+      end
