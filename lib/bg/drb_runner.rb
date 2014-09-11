@@ -8,7 +8,6 @@ module Bg
 
     def initialize(logfile: logfile)
       @logger = Logger.new(logfile || "/dev/null")
-      #@logger = Logger.new(File.expand_path("../../../log/test.log", __FILE__))
     end
 
     def ready?
@@ -24,12 +23,11 @@ module Bg
           logger.info "Start exec: #{method}"
           runner.new.run(*Marshal.load(args))
           logger.info "Finish exec: #{method}"
-          DRb.stop_service
-          Process.exit 0
         rescue Exception => e
           logger.info "Failed exec: #{method}\n#{e}"
+        ensure
           DRb.stop_service rescue nil
-          Process.exit 1
+          Process.exit
         end
       end
     end
