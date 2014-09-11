@@ -1,15 +1,14 @@
 require "method_source"
 require "thread"
 require "drb"
-require "logger"
 require "bg/drb_runner"
 
 module Bg
   class Runner
-    attr_reader :logger, :drb_uri, :drb_pid, :drb_runner
+    attr_reader :logfile, :drb_uri, :drb_pid, :drb_runner
 
-    def initialize(logger: nil)
-      @logger = logger
+    def initialize(logfile: nil)
+      @logfile = logfile
       @drb_uri = "druby://127.0.0.1:#{random_port}"
     end
 
@@ -34,7 +33,7 @@ module Bg
     def start_drb_runner
       return if drb_runner
       @drb_pid = fork do
-        DRb.start_service drb_uri, DrbRunner.new(logger: logger)
+        DRb.start_service drb_uri, DrbRunner.new(logfile: logfile)
         DRb.thread.join
       end
       Process.detach drb_pid

@@ -3,10 +3,10 @@ require "bg/runner"
 
 module Bg
   class << self
-    attr_accessor :logger
+    attr_accessor :logfile
 
     def run(*args, &block)
-      Runner.new(logger: logger).run(*args, &block)
+      Runner.new(logfile: logfile).run(*args, &block)
     end
 
   end

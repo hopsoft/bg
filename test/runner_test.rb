@@ -6,10 +6,10 @@ module Bg
   class RunnerTest < MicroTest::Test
 
     before do
-      Bg.logger = Logger.new(File.expand_path("../../log/test.log", __FILE__))
+      Bg.logfile = File.expand_path("../../log/test.log", __FILE__)
     end
 
-    test "foo" do
+    test "3 sleeps" do
       Bg.run 1, 2, 3 do |a, b, c|
         sleep a
         sleep b

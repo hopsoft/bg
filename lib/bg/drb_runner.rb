@@ -1,19 +1,25 @@
+require "thread"
+require "drb"
+require "logger"
+
 module Bg
   class DrbRunner
+    attr_reader :logger
 
-    def initialize(logger: logger)
-      @logger = logger || Logger.new("/dev/null")
+    def initialize(logfile: logfile)
+      @logger = Logger.new(logfile || "/dev/null")
+      #@logger = Logger.new(File.expand_path("../../../log/test.log", __FILE__))
     end
 
     def ready?
       true
     end
 
-    def run(proc: nil, args: [], logger: nil)
+    def run(proc: nil, args: [])
       Thread.new do
         begin
           sleep 0
-          method = "define_method :run #{proc_string}"
+          method = "define_method :run #{proc}"
           runner = Class.new { eval method }
           logger.info "Start exec: #{method}"
           runner.new.run(*Marshal.load(args))
