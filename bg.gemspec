@@ -1,27 +1,24 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'bg/version'
+$:.push File.expand_path("../lib", __FILE__)
 
-Gem::Specification.new do |gem|
-  gem.name          = "bg"
-  gem.version       = Bg::VERSION
-  gem.authors       = ["Nathan Hopkins"]
-  gem.email         = ["natehop@gmail.com"]
-  gem.description   = "Easily run code in a separate background process."
-  gem.summary       = "Easily run code in a separate background process."
-  gem.homepage      = "https://github.com/hopsoft/bg"
-  gem.license       = "MIT"
+# Maintain your gem's version:
+require "bg/version"
 
-  gem.files         = Dir["lib/**/*.rb", "bin/*", "[A-Z].*"]
-  gem.test_files    = Dir["test/**/*.rb"]
-  gem.require_paths = ["lib"]
+# Describe your gem and declare its dependencies:
+Gem::Specification.new do |s|
+  s.name        = "bg"
+  s.version     = Bg::VERSION
+  s.authors     = ["Nathan Hopkins"]
+  s.email       = ["natehop@gmail.com"]
+  s.homepage    = "https://github.com/hopsoft/bg"
+  s.summary     = "Summary of Bg."
+  s.description = "Description of Bg."
+  s.license     = "MIT"
 
-  gem.add_dependency "os", "~> 0.9.6"
-  gem.add_dependency "method_source", "~> 0.8.2"
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  gem.add_development_dependency "bundler", "~> 1.5"
-  gem.add_development_dependency "rake"
-  gem.add_development_dependency "pry"
-  gem.add_development_dependency "micro_test", "~> 0.4.4"
+  s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
+  s.add_dependency "concurrent-ruby", "~> 1.0.0"
+
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rubocop"
 end

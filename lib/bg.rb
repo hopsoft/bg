@@ -1,13 +1,5 @@
-require "bg/version"
-require "bg/runner"
+require "bg/engine"
 
 module Bg
-  class << self
-    attr_accessor :logfile
-
-    def run(*args, &block)
-      Runner.new(logfile: logfile).run(*args, &block)
-    end
-
-  end
+  # Your code goes here...
 end
