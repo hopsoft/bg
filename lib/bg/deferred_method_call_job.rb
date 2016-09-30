@@ -1,5 +1,7 @@
+require "active_job"
+
 module Bg
-  class DeferredMethodCallJob < ApplicationJob
+  class DeferredMethodCallJob < ::ActiveJob::Base
     queue_as :default
 
     def perform(object, method, *args)

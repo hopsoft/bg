@@ -1,5 +1,6 @@
-require "bg/engine"
+require "bg/version"
+require "bg/asyncable"
+require "bg/deferrable"
 
 module Bg
-  # Your code goes here...
 end

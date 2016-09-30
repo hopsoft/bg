@@ -1,3 +1,7 @@
+require "active_record"
+require "concurrent"
+require "globalid"
+
 module Bg
   class Asyncable
     class Wrapper
@@ -22,7 +26,7 @@ module Bg
 
     module Behavior
       def async(delay: 0)
-        ::Asyncable.new(self, delay: delay.to_f)
+        ::Bg::Asyncable.new(self, delay: delay.to_f)
       end
     end
 
@@ -39,7 +43,7 @@ module Bg
       if object.respond_to? name
         raise ::ArgumentError.new("blocks are not supported") if block_given?
         begin
-          wrapped = ::Asyncable::Wrapper.new(object.to_global_id, delay: delay)
+          wrapped = ::Bg::Asyncable::Wrapper.new(object.to_global_id, delay: delay)
           wrapped.async.invoke_method name, *args
         rescue ::StandardError => e
           raise ::ArgumentError.new("Failed to execute method asynchronously! <#{object.class.name}##{name}> #{e.message}")

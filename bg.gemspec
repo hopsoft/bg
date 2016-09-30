@@ -1,24 +1,22 @@
-$:.push File.expand_path("../lib", __FILE__)
+require_relative "lib/bg/version"
 
-# Maintain your gem's version:
-require "bg/version"
+Gem::Specification.new do |gem|
+  gem.name        = "bg"
+  gem.license     = "MIT"
+  gem.version     = Bg::VERSION
+  gem.authors     = ["Nathan Hopkins"]
+  gem.email       = ["natehop@gmail.com"]
+  gem.homepage    = "https://github.com/hopsoft/bg"
+  gem.summary     = ""
 
-# Describe your gem and declare its dependencies:
-Gem::Specification.new do |s|
-  s.name        = "bg"
-  s.version     = Bg::VERSION
-  s.authors     = ["Nathan Hopkins"]
-  s.email       = ["natehop@gmail.com"]
-  s.homepage    = "https://github.com/hopsoft/bg"
-  s.summary     = "Summary of Bg."
-  s.description = "Description of Bg."
-  s.license     = "MIT"
+  gem.files       = Dir["lib/**/*.rb", "bin/*", "[A-Z]*"]
+  gem.test_files  = Dir["test/**/*.rb"]
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  gem.add_dependency "activerecord",    ">= 5.0"
+  gem.add_dependency "activejob",       ">= 5.0"
+  gem.add_dependency "globalid",        ">= 0.3"
+  gem.add_dependency "concurrent-ruby", ">= 1.0"
 
-  s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
-  s.add_dependency "concurrent-ruby", "~> 1.0.0"
-
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rubocop"
+  gem.add_development_dependency "rake"
+  gem.add_development_dependency "pry-test"
 end

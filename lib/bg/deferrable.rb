@@ -1,9 +1,12 @@
+require "globalid"
+require "bg/deferred_method_call_job"
+
 module Bg
   class Deferrable
     module Behavior
       # Enqueues the method call to be executed by a DeferredMethodCallJob background worker.
       def defer(queue: :default, wait: 0)
-        ::Deferrable.new self, queue: queue, wait: wait
+        ::Bg::Deferrable.new self, queue: queue, wait: wait
       end
     end
 
@@ -21,9 +24,9 @@ module Bg
         raise ::ArgumentError.new("blocks are not supported") if block_given?
         begin
           if wait > 0
-            job = ::DeferredMethodCallJob.set(queue: queue, wait: wait).perform_later object, name.to_s, *args
+            job = ::Bg::DeferredMethodCallJob.set(queue: queue, wait: wait).perform_later object, name.to_s, *args
           else
-            job = ::DeferredMethodCallJob.set(queue: queue).perform_later object, name.to_s, *args
+            job = ::Bg::DeferredMethodCallJob.set(queue: queue).perform_later object, name.to_s, *args
           end
         rescue ::StandardError => e
           raise ::ArgumentError.new("Failed to background method call! <#{object.class.name}##{name}> #{e.message}")
