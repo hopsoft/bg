@@ -43,6 +43,7 @@ This means that state is not shared between the main process/thread with the pro
 #### Good
 
 ```ruby
+user = User.find(params[:id])
 user.update(name: "new value") # persisted changes will be available in Bg invoked methods
 
 user.async.do_hard_work 1, true, "foo", :bar, Time.now
@@ -52,6 +53,7 @@ user.defer.do_hard_work 1, true, "foo"
 #### Bad
 
 ```ruby
+user = User.find(params[:id])
 user.name = "new value" # in memory changes will not be available in Bg invoked methods
 
 user.async.do_hard_work do
