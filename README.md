@@ -29,10 +29,10 @@ user.defer.do_hard_work # non-blocking out-of-process background job
 user.defer(queue: :low, wait: 5.minutes).do_hard_work
 ```
 
-## Caveats
+## Provisos
 
 Bg leverages [GlobalID](https://github.com/rails/globalid) to marshal ActiveRecord instances across thread & process boundaries.
-This means that state is not shared between the main process/thread with the process/thread performing the method.
+This means that state is not shared between the main process/thread with the process/thread actually executing the method.
 
 * Do not depend on lexically scoped bindings when invoking methods with Bg::Deferrable
 * Do not pass unmarshallable types as arguments with Bg::Deferrable.
