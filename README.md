@@ -23,9 +23,10 @@ end
 
 ```ruby
 user = User.find(params[:id])
-user.do_hard_work       # blocking in-process work
-user.async.do_hard_work # non-blocking in-process work
-user.defer.do_hard_work # non-blocking out-of-process work
+user.do_hard_work       # blocking in-process
+user.async.do_hard_work # non-blocking in-process
+user.defer.do_hard_work # non-blocking out-of-process background job
+user.defer(queue: :low, wait: 5.minutes).do_hard_work
 ```
 
 ## Caveats
