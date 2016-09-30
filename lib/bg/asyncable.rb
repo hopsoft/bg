@@ -34,7 +34,6 @@ module Bg
 
     def initialize(object, delay: 0)
       raise ::ArgumentError unless object.is_a?(::GlobalID::Identification)
-      super()
       @object = object
       @delay = delay.to_f
     end

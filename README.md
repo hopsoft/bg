@@ -57,8 +57,7 @@ user = User.find(params[:id])
 user.name = "new value" # in memory changes will not be available in Bg invoked methods
 
 user.async.do_hard_work do
-  # this is dangerous... you better know what you're doing
-  # best to avoid
+  # blocks are not supported
 end
 
 user.defer.do_hard_work :foo, Time.now # args won't marshal properly
