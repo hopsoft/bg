@@ -10,6 +10,23 @@ module Bg
       end
     end
 
+    def self.make_enqueable(value)
+      case value
+      when ::Hash then
+        value.each.with_object({}) do |(key, val), memo|
+          memo[key.to_s] = make_enqueable(val)
+        end
+      when ::Array then
+        value.map { |val| make_enqueable val }
+      when ::Symbol then
+        value.to_s
+      when ::Date, ::Time, ::DateTime then
+        value.respond_to?(:iso8601) ? value.iso8601 : value.to_s
+      else
+        value
+      end
+    end
+
     attr_reader :object, :queue, :wait
 
     def initialize(object, queue: :default, wait: 0)
@@ -23,11 +40,9 @@ module Bg
       if object.respond_to? name
         raise ::ArgumentError.new("blocks are not supported") if block_given?
         begin
-          if wait > 0
-            job = ::Bg::DeferredMethodCallJob.set(queue: queue, wait: wait).perform_later object, name.to_s, *args
-          else
-            job = ::Bg::DeferredMethodCallJob.set(queue: queue).perform_later object, name.to_s, *args
-          end
+          queue_args = { queue: queue }
+          queue_args[:wait] = wait if wait > 0
+          job = ::Bg::DeferredMethodCallJob.set(**queue_args).perform_later object, name.to_s, *self.class.make_enqueable(args)
         rescue ::StandardError => e
           raise ::ArgumentError.new("Failed to background method call! <#{object.class.name}##{name}> #{e.message}")
         ensure
@@ -41,5 +56,6 @@ module Bg
       return true if object.respond_to? name
       super
     end
+
   end
 end

@@ -1,3 +1,10 @@
+[![Lines of Code](http://img.shields.io/badge/lines_of_code-121-brightgreen.svg?style=flat)](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/)
+[![Code Status](http://img.shields.io/codeclimate/github/hopsoft/bg.svg?style=flat)](https://codeclimate.com/github/hopsoft/bg)
+[![Dependency Status](http://img.shields.io/gemnasium/hopsoft/bg.svg?style=flat)](https://gemnasium.com/hopsoft/bg)
+[![Build Status](http://img.shields.io/travis/hopsoft/bg.svg?style=flat)](https://travis-ci.org/hopsoft/bg)
+[![Coverage Status](https://img.shields.io/coveralls/hopsoft/bg.svg?style=flat)](https://coveralls.io/r/hopsoft/bg?branch=master)
+[![Downloads](http://img.shields.io/gem/dt/bg.svg?style=flat)](http://rubygems.org/gems/bg)
+
 # Bg
 
 ## Non-blocking ActiveRecord method invocation
@@ -31,7 +38,7 @@ user.defer(queue: :low, wait: 5.minutes).do_hard_work
 
 ## Provisos
 
-Bg leverages [GlobalID](https://github.com/rails/globalid) to marshal ActiveRecord instances across thread & process boundaries.
+Bg leverages [GlobalID::Identification](https://github.com/rails/globalid) to marshal ActiveRecord instances across thread & process boundaries.
 This means that state is not shared between the main process/thread with the process/thread actually executing the method.
 
 * Do not depend on lexically scoped bindings when invoking methods with Bg::Deferrable
