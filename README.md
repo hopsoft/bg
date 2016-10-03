@@ -30,19 +30,25 @@ end
 
 ```ruby
 user = User.find(params[:id])
-user.do_hard_work       # blocking in-process
-user.async.do_hard_work # non-blocking in-process
-user.defer.do_hard_work # non-blocking out-of-process background job
+
+# blocking in-process
+user.do_hard_work
+
+# non-blocking in-process separate thread
+user.async.do_hard_work
+
+# non-blocking out-of-process background job
+user.defer.do_hard_work
 user.defer(queue: :low, wait: 5.minutes).do_hard_work
 ```
 
-## Provisos
+## Deferrable
 
-Bg leverages [GlobalID::Identification](https://github.com/rails/globalid) to marshal ActiveRecord instances across thread & process boundaries.
-This means that state is not shared between the main process/thread with the process/thread actually executing the method.
+`Bg::Deferrable` leverages [GlobalID::Identification](https://github.com/rails/globalid) to marshal ActiveRecord instances across process boundaries.
+This means that state is not shared between the main process & the process actually executing the method.
 
-* __Do not__ depend on lexically scoped bindings when invoking methods with `Bg::Deferrable`.
-* __Do not__ pass unmarshallable types as arguments with `Bg::Deferrable`.
+* __Do not__ depend on lexically scoped bindings when invoking methods.
+* __Do not__ pass unmarshallable types as arguments.
   `Bg::Deferrable` will prepare arguments for enqueuing, but best practice is to follow
   Sidekiq's [simple parameters](https://github.com/mperham/sidekiq/wiki/Best-Practices#1-make-your-job-parameters-small-and-simple) rule.
 
@@ -52,9 +58,6 @@ This means that state is not shared between the main process/thread with the pro
 
 ```ruby
 user = User.find(params[:id])
-user.update(name: "new value") # persisted changes will be available in Bg invoked methods
-
-user.async.do_hard_work 1, true, "foo", :bar, Time.now
 user.defer.do_hard_work 1, true, "foo"
 ```
 
@@ -62,15 +65,41 @@ user.defer.do_hard_work 1, true, "foo"
 
 ```ruby
 user = User.find(params[:id])
-user.name = "new value" # in memory changes will not be available in Bg invoked methods
+# in memory changes will not be available in Bg::Deferrable invoked methods
+user.name = "new value"
 
-user.async.do_hard_work do
-  # blocks are not supported
-end
-
-user.defer.do_hard_work :foo, Time.now # args won't marshal properly
+# args may not marshal properly
+user.defer.do_hard_work :foo, Time.now, instance_of_complex_type
 
 user.defer.do_hard_work do
   # blocks are not supported
 end
 ```
+
+## Asyncable
+
+`Bg::Asyncable` disallows invoking methods that take blocks as an argument.
+
+* __Important:__ It's your responsibility to protect shared data between threads
+
+### Examples
+
+#### Good
+
+```ruby
+user = User.find(params[:id])
+user.name = "new value"
+user.async.do_hard_work 1, true, "foo"
+user.async.do_hard_work :foo, Time.now, instance_of_complex_type
+```
+
+#### Bad
+
+```ruby
+user = User.find(params[:id])
+
+user.async.do_hard_work do
+  # blocks are not supported
+end
+```
+

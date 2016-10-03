@@ -36,4 +36,9 @@ class Bg::DeferredMethodCallJobTest < ::ActiveJob::TestCase
     end
   end
 
+  test "#perform_now properly invokes the method" do
+    obj = ::Bg::BackgroundableObject.new(:example)
+    assert ::Bg::DeferredMethodCallJob.perform_now(obj, :update)
+  end
+
 end

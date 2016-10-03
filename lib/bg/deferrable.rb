@@ -27,8 +27,6 @@ module Bg
       end
     end
 
-    attr_reader :object, :queue, :wait
-
     def initialize(object, queue: :default, wait: 0)
       raise ::ArgumentError unless object.is_a?(::GlobalID::Identification)
       @object = object
@@ -37,14 +35,14 @@ module Bg
     end
 
     def method_missing(name, *args)
-      if object.respond_to? name
+      if @object.respond_to? name
         raise ::ArgumentError.new("blocks are not supported") if block_given?
         begin
-          queue_args = { queue: queue }
-          queue_args[:wait] = wait if wait > 0
-          job = ::Bg::DeferredMethodCallJob.set(**queue_args).perform_later object, name.to_s, *self.class.make_enqueable(args)
+          queue_args = { queue: @queue }
+          queue_args[:wait] = @wait if @wait > 0
+          job = ::Bg::DeferredMethodCallJob.set(**queue_args).perform_later @object, name.to_s, *self.class.make_enqueable(args)
         rescue ::StandardError => e
-          raise ::ArgumentError.new("Failed to background method call! <#{object.class.name}##{name}> #{e.message}")
+          raise ::ArgumentError.new("Failed to background method call! <#{@object.class.name}##{name}> #{e.message}")
         ensure
           return job
         end
@@ -53,7 +51,7 @@ module Bg
     end
 
     def respond_to?(name)
-      return true if object.respond_to? name
+      return true if @object.respond_to? name
       super
     end
   end
