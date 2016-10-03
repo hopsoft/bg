@@ -41,9 +41,9 @@ user.defer(queue: :low, wait: 5.minutes).do_hard_work
 Bg leverages [GlobalID::Identification](https://github.com/rails/globalid) to marshal ActiveRecord instances across thread & process boundaries.
 This means that state is not shared between the main process/thread with the process/thread actually executing the method.
 
-* __Do not__ depend on lexically scoped bindings when invoking methods with Bg::Deferrable
-* __Do not__ pass unmarshallable types as arguments with Bg::Deferrable.
-  Bg prepares arguments for enqueuing, but best practice is to follow
+* __Do not__ depend on lexically scoped bindings when invoking methods with `Bg::Deferrable`.
+* __Do not__ pass unmarshallable types as arguments with `Bg::Deferrable`.
+  `Bg::Deferrable` will prepare arguments for enqueuing, but best practice is to follow
   Sidekiq's [simple parameters](https://github.com/mperham/sidekiq/wiki/Best-Practices#1-make-your-job-parameters-small-and-simple) rule.
 
 ### Examples
