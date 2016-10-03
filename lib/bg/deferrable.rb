@@ -56,6 +56,5 @@ module Bg
       return true if object.respond_to? name
       super
     end
-
   end
 end
