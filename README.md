@@ -21,8 +21,8 @@ This library allows you to invoke ActiveRecord instance methods in the backgroun
 
 ```ruby
 class User < ApplicationRecord
-  include Bg::Asyncable  # uses concurrent-ruby
-  include Bg::Deferrable # uses ActiveJob
+  include Bg::Asyncable::Behavior  # uses concurrent-ruby
+  include Bg::Deferrable::Behavior # uses ActiveJob
 end
 ```
 
