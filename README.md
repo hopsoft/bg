@@ -7,6 +7,8 @@
 
 # Bg
 
+[![Sponsor](https://code-sponsor.herokuapp.com/sponsor/12345/sba.svg)](https://www.jetbrains.com/ruby/)
+
 ## Non-blocking ActiveRecord method invocation
 
 This library allows you to invoke ActiveRecord instance methods in the background.
