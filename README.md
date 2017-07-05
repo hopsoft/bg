@@ -7,7 +7,7 @@
 
 # Bg
 
-[![Sponsor](https://code-sponsor.herokuapp.com/sponsor/12345/sba.svg)](https://www.jetbrains.com/ruby/)
+[![Sponsor](https://code-sponsor.herokuapp.com/sponsor/github/hopsoft/bg.svg)](https://www.jetbrains.com/ruby/)
 
 ## Non-blocking ActiveRecord method invocation
 
