@@ -5,9 +5,9 @@
 [![Coverage Status](https://img.shields.io/coveralls/hopsoft/bg.svg?style=flat)](https://coveralls.io/r/hopsoft/bg?branch=master)
 [![Downloads](http://img.shields.io/gem/dt/bg.svg?style=flat)](http://rubygems.org/gems/bg)
 
-# Bg
-
 [![Sponsor](https://app.codesponsor.io/embed/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg.svg)](https://app.codesponsor.io/link/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg)
+
+# Bg
 
 ## Non-blocking ActiveRecord method invocation
 
