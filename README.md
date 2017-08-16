@@ -5,7 +5,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/hopsoft/bg.svg?style=flat)](https://coveralls.io/r/hopsoft/bg?branch=master)
 [![Downloads](http://img.shields.io/gem/dt/bg.svg?style=flat)](http://rubygems.org/gems/bg)
 
-[![Sponsor](https://app.codesponsor.io/embed/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg.svg)](https://app.codesponsor.io/link/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg)
+<a rel="nofollow" href="https://app.codesponsor.io/link/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg"><img src="https://app.codesponsor.io/embed/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
 
 # Bg
 
