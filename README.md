@@ -1,11 +1,9 @@
 [![Lines of Code](http://img.shields.io/badge/lines_of_code-117-brightgreen.svg?style=flat)](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/)
-[![Code Status](http://img.shields.io/codeclimate/github/hopsoft/bg.svg?style=flat)](https://codeclimate.com/github/hopsoft/bg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1144d074fee9298347a7/maintainability)](https://codeclimate.com/github/hopsoft/bg/maintainability)
 [![Dependency Status](http://img.shields.io/gemnasium/hopsoft/bg.svg?style=flat)](https://gemnasium.com/hopsoft/bg)
 [![Build Status](http://img.shields.io/travis/hopsoft/bg.svg?style=flat)](https://travis-ci.org/hopsoft/bg)
 [![Coverage Status](https://img.shields.io/coveralls/hopsoft/bg.svg?style=flat)](https://coveralls.io/r/hopsoft/bg?branch=master)
 [![Downloads](http://img.shields.io/gem/dt/bg.svg?style=flat)](http://rubygems.org/gems/bg)
-
-<a rel="nofollow" href="https://app.codesponsor.io/link/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg"><img src="https://app.codesponsor.io/embed/QMSjMHrtPhvfmCnk5Hbikhhr/hopsoft/bg.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
 
 # Bg
 
